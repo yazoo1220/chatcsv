@@ -25,7 +25,7 @@ from langchain.callbacks.base import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
 data = st.file_uploader(label='Upload CSV file', type='csv')
-header = number_input('ヘッダーの位置')
+header = st.number_input(label='ヘッダーの位置',value=1)
 
 df = pd.read_csv(data,header=1)
 st.dataframe(df)
