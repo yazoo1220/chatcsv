@@ -8,7 +8,7 @@ import pexpect
 st.set_page_config(page_title="📊 ChatCSV", page_icon="📊")
 st.header("📊 ChatCSV")
 
-df = ''
+df = pd.DataFrame([])
 if "generated" not in st.session_state:
     st.session_state["generated"] = []
 
