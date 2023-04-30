@@ -27,7 +27,7 @@ from langchain.callbacks.streamlit import StreamlitCallbackHandler
 df = pd.DataFrame([])
 data = st.file_uploader(label='Upload CSV file', type='csv')
 
-st.download_button(label='サンプルデータをダウンロードする',data='https://drive.google.com/file/d/1wuSx35y3-hjZew1XhrM78xlAGIDTd4fp/view?usp=drive_open',mime='text/csv')
+# st.download_button(label='サンプルデータをダウンロードする',data='https://drive.google.com/file/d/1wuSx35y3-hjZew1XhrM78xlAGIDTd4fp/view?usp=drive_open',mime='text/csv')
 
 header_num = st.number_input(label='ヘッダーの位置',value=0)
 index_num = st.number_input(label='インデックスの位置',value=2)
