@@ -29,7 +29,6 @@ data = st.file_uploader(label='Upload CSV file', type='csv')
 header_num = st.number_input(label='ヘッダーの位置',value=0)
 index_num = st.number_input(label='インデックスの位置',value=2)
 index_list = [i for i in range(index_num)]
-submit_button = st.button('submit')
 
 if data:
     df = pd.read_csv(data,header=header_num,index_col=index_list)
