@@ -27,12 +27,13 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 data = st.file_uploader(label='Upload CSV file', type='csv')
 
 if data:
-    header_num = st.text_input(label='ヘッダーの位置',value="0")
-    index_num = st.text_input(label='インデックスの位置',value="1,2")
+    header_num = st.number_input(label='ヘッダーの位置',value=0)
+    index_num = st.number_input(label='インデックスの位置',value=2)
+    index_list = [i for i in range(index_num)]
     submit_button = st.button('submit')
 
 if data and submit_button:
-    df = pd.read_csv(data,header=header_num,index_col=index_num)
+    df = pd.read_csv(data,header=header_num,index_col=index_list)
     st.dataframe(df)
     agent = create_pandas_dataframe_agent(OpenAI(temperature=0, max_tokens=1000), df, verbose=True)
 
