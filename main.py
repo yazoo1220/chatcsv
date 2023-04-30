@@ -35,7 +35,6 @@ if data:
 if data and submit_button:
     df = pd.read_csv(data,header=header_num,index_col=index_list)
     st.dataframe(df)
-    agent = create_pandas_dataframe_agent(OpenAI(temperature=0, max_tokens=1000), df, verbose=True)
 
 def get_text():
     input_text = st.text_input("You: ", "線形回帰でこの期間のあとの5カ月の利益予測をしてください", key="input")
@@ -45,7 +44,7 @@ def get_text():
 ask_button = ""
 
 if df.shape[0] > 0:
-    qa = load_chain(urls.split(","))
+    agent = create_pandas_dataframe_agent(OpenAI(temperature=0, max_tokens=1000), df, verbose=True)
     user_input = get_text()
     ask_button = st.button('ask')
 else:
