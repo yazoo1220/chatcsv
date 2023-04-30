@@ -44,7 +44,7 @@ def get_text():
 
 ask_button = ""
 
-if df != '':
+if df.shape[0] > 0:
     qa = load_chain(urls.split(","))
     user_input = get_text()
     ask_button = st.button('ask')
