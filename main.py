@@ -6,7 +6,7 @@ import pexpect
 
 # From here down is all the StreamLit UI.
 st.set_page_config(page_title="📊 ChatCSV", page_icon="📊")
-st.header("🔗 ChatCSV")
+st.header("📊 ChatCSV")
 
 df = ''
 if "generated" not in st.session_state:
