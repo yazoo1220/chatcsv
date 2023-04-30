@@ -27,6 +27,8 @@ from langchain.callbacks.streamlit import StreamlitCallbackHandler
 df = pd.DataFrame([])
 data = st.file_uploader(label='Upload CSV file', type='csv')
 
+st.download_button(label='サンプルデータをダウンロードする',data='https://drive.google.com/file/d/1wuSx35y3-hjZew1XhrM78xlAGIDTd4fp/view?usp=drive_open')
+
 header_num = st.number_input(label='ヘッダーの位置',value=0)
 index_num = st.number_input(label='インデックスの位置',value=2)
 index_list = [i for i in range(index_num)]
@@ -36,7 +38,7 @@ if data:
     st.dataframe(df)
 
 def get_text():
-    input_text = st.text_input("You: ", "線形回帰でこの期間のあとの5カ月の利益予測をしてください", key="input")
+    input_text = st.text_input("You: ", "売上の平均を教えてください", key="input")
     return input_text
 
 
@@ -51,7 +53,7 @@ if df.shape[0] > 0:
 else:
     pass
 
-language = st.selectbox('language',['English','日本語'])
+language = st.selectbox('language',['日本語','English'])
 
 if ask_button:
     chat_history = []
