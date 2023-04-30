@@ -21,7 +21,8 @@ from langchain.llms import OpenAI
 import pandas as pd
 from langchain.agents import create_pandas_dataframe_agent
 from langchain.callbacks.base import CallbackManager
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+from langchain.callbacks.base import CallbackManager
+from langchain.callbacks.streamlit import StreamlitCallbackHandler
 
 df = pd.DataFrame([])
 data = st.file_uploader(label='Upload CSV file', type='csv')
@@ -42,7 +43,9 @@ def get_text():
 ask_button = ""
 
 if df.shape[0] > 0:
-    agent = create_pandas_dataframe_agent(OpenAI(temperature=0, max_tokens=1000), df, verbose=True)
+    callback_manager = CallbackManager([StreamlitCallbackHandler()])
+
+    agent = create_pandas_dataframe_agent(OpenAI(temperature=0, max_tokens=1000), df, callback_handler=callback_manager, verbose=True)
     user_input = get_text()
     ask_button = st.button('ask')
 else:
