@@ -27,10 +27,10 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 data = st.file_uploader(label='Upload CSV file', type='csv')
 header = st.number_input(label='ヘッダーの位置',value=1)
 
-df = pd.read_csv(data,header=1)
-st.dataframe(df)
-agent = create_pandas_dataframe_agent(OpenAI(temperature=0, max_tokens=1000), df, verbose=True)
-
+if data:
+    df = pd.read_csv(data,header=1)
+    st.dataframe(df)
+    agent = create_pandas_dataframe_agent(OpenAI(temperature=0, max_tokens=1000), df, verbose=True)
 
 def get_text():
     input_text = st.text_input("You: ", "線形回帰でこの期間のあとの5カ月の利益予測をしてください", key="input")
