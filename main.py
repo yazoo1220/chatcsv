@@ -8,7 +8,6 @@ import pexpect
 st.set_page_config(page_title="📊 ChatCSV", page_icon="📊")
 st.header("📊 ChatCSV")
 
-df = pd.DataFrame([])
 if "generated" not in st.session_state:
     st.session_state["generated"] = []
 
@@ -24,6 +23,7 @@ from langchain.agents import create_pandas_dataframe_agent
 from langchain.callbacks.base import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
+df = pd.DataFrame([])
 data = st.file_uploader(label='Upload CSV file', type='csv')
 
 if data:
