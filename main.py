@@ -32,7 +32,7 @@ if data:
     submit_button = st.button('submit')
 
 if data and submit_button:
-    df = pd.read_csv(data,header=header,index=index_num)
+    df = pd.read_csv(data,header=header_num,index=index_num)
     st.dataframe(df)
     agent = create_pandas_dataframe_agent(OpenAI(temperature=0, max_tokens=1000), df, verbose=True)
 
