@@ -47,7 +47,7 @@ ask_button = ""
 if df.shape[0] > 0:
     callback_manager = CallbackManager([StreamlitCallbackHandler()])
 
-    agent = create_pandas_dataframe_agent(OpenAI(temperature=0, max_tokens=1000), df, callback_handler=callback_manager, verbose=True)
+    agent = create_pandas_dataframe_agent(OpenAI(temperature=0, max_tokens=1000), df, callback_handler=callback_manager, return_intermediate_steps=True,verbose=True)
     user_input = get_text()
     ask_button = st.button('ask')
 else:
