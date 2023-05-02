@@ -58,7 +58,7 @@ language = st.selectbox('language',['日本語','English'])
 if ask_button:
     chat_history = []
     prefix = f'You are the best explainer. please answer in {language}. User: '
-    result = agent({input:"user_input"})
+    result = agent({"input":user_input})
     st.session_state.past.append(user_input)
     st.session_state.generated.append(result)
     # chat_history.append(user_input)
