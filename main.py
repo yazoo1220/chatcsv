@@ -60,6 +60,7 @@ if ask_button:
     
     st.session_state.past.append(user_input)
     st.session_state.generated.append(result)
+    st.session_state.generated.append(response['output'])
     # chat_history.append(user_input)
     # chat_history.append(result)
 
