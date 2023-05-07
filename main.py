@@ -68,7 +68,8 @@ if ask_button:
         actions_list = []
         for action, result in actions:
             text = f"""
-               Tool: {action.tool}\nInput: {action.tool_input}\nLog: {action.log}\nResult: {result}\n
+               Tool: {action.tool}\n
+               Input: {action.tool_input}\n Log: {action.log}\nResult: {result}\n
             """
             text = re.sub(r'`[^`]+`', '', text)
             actions_list.append(text)
