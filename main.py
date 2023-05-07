@@ -57,18 +57,15 @@ if ask_button:
         chat_history = []
         prefix = f'You are the best explainer. please answer in {language}. User: '
         response = agent({"input":user_input})
-        result = json.dumps(response['intermediate_steps'], indent=2, ensure_ascii=False).replace('[\n', '').replace(']\n', '').replace(']', '').replace('"', '')
+        try:
+            result = json.dumps(response['intermediate_steps'], indent=2, ensure_ascii=False).replace('[\n', '').replace(']\n', '').replace(']', '').replace('"', '')
+        except:
+            result = ''
         answer = json.dumps(response['output'],ensure_ascii=False).replace('"', '')
     
         st.session_state.past.append(user_input)
-        try:
-            st.session_state.generated.append(result+'\n\n'+answer)
-        except:
-            st.session_state.generated.append(answer)
-        # st.session_state.generated.append(response['output'])
-        # chat_history.append(user_input)
-        # chat_history.append(result)
-
+        st.session_state.generated.append(result+'\n\n'+answer)
+        
 if st.session_state["generated"]:
 
     for i in range(len(st.session_state["generated"]) - 1, -1, -1):
