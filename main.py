@@ -62,7 +62,9 @@ if ask_button:
         except:
             result = ''
         answer = json.dumps(response['output'],ensure_ascii=False).replace('"', '')
-        st.info(response['intermediate_steps'])
+        with st.expander('ℹ️', expanded=False)
+            st.info([x for x in response['intermediate_steps']])
+            
         st.session_state.past.append(user_input)
         st.session_state.generated.append(result+answer)
         
