@@ -50,16 +50,23 @@ else:
 
 language = st.selectbox('language',['English','日本語'])
 
-
 import json
+from collections import namedtuple
+AgentAction = namedtuple('AgentAction', ['tool', 'tool_input', 'log'])
+
+def format_action(action, result):
+    action_fields = '\n'.join([f"{field}: {getattr(action, field)}" for field in action._fields])
+    return f"{action_fields}\nResult: {result}\n"
+
 if ask_button:
      with st.spinner('typing...'):
         chat_history = []
         prefix = f'You are the best explainer. please answer in {language}. User: '
         response = agent({"input":user_input})
+        actions = response['intermediate_steps']
         answer = json.dumps(response['output'],ensure_ascii=False).replace('"', '')
         with st.expander('ℹ️', expanded=False):
-            st.info([x for x in response['intermediate_steps']])
+            st.info([format_action(action,result) for action, result in actions])
             
         st.session_state.past.append(user_input)
         st.session_state.generated.append(answer)
