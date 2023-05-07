@@ -65,8 +65,12 @@ if ask_button:
         response = agent({"input":user_input})
         actions = response['intermediate_steps']
         answer = json.dumps(response['output'],ensure_ascii=False).replace('"', '')
-        with st.expander('ℹ️', expanded=False):
-            st.info([format_action(action,result) for action, result in actions])
+        if language == 'English':
+            with st.expander('ℹ️ Show details', expanded=False):
+                st.info([format_action(action,result) for action, result in actions])
+        else:
+            with st.expander('ℹ️ 詳細を見る', expanded=False):
+                st.info([format_action(action,result) for action, result in actions])
             
         st.session_state.past.append(user_input)
         st.session_state.generated.append(answer)
