@@ -42,7 +42,7 @@ def get_text():
 ask_button = ""
 
 if df.shape[0] > 0:
-    agent = create_pandas_dataframe_agent(OpenAI(temperature=0, max_tokens=1000), df, verbose=True)#, return_intermediate_steps=True)
+    agent = create_pandas_dataframe_agent(OpenAI(temperature=0, max_tokens=1000), df, verbose=True, return_intermediate_steps=True)
     user_input = get_text()
     ask_button = st.button('ask')
 else:
@@ -50,10 +50,14 @@ else:
 
 language = st.selectbox('language',['English','日本語'])
 
+
+import json
 if ask_button:
     chat_history = []
     prefix = f'You are the best explainer. please answer in {language}. User: '
-    result = agent.run(user_input) # ({"input":user_input})
+    response = agent({"input":user_input})
+    result = json.dumps(response['intermediate_steps'], indent=1)
+    
     st.session_state.past.append(user_input)
     st.session_state.generated.append(result)
     # chat_history.append(user_input)
