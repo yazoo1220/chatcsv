@@ -60,7 +60,7 @@ if ask_button:
         result = json.dumps(response['intermediate_steps'], indent=2).replace('[\n', '').replace(']\n', '')
     
         st.session_state.past.append(user_input)
-        st.session_state.generated.append(st.info(result))
+        st.session_state.generated.append(result)
         # st.session_state.generated.append(response['output'])
         # chat_history.append(user_input)
         # chat_history.append(result)
