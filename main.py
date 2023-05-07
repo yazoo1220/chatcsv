@@ -61,7 +61,10 @@ if ask_button:
         answer = json.dumps(response['output'],ensure_ascii=False).replace('"', '')
     
         st.session_state.past.append(user_input)
-        st.session_state.generated.append(result+'\n\n'+answer)
+        try:
+            st.session_state.generated.append(result+'\n\n'+answer)
+        except:
+            st.session_state.generated.append(answer)
         # st.session_state.generated.append(response['output'])
         # chat_history.append(user_input)
         # chat_history.append(result)
