@@ -70,7 +70,7 @@ if ask_button:
                 st.info(''.join([format_action(action,result) for action, result in actions]))
         else:
             with st.expander('ℹ️ 詳細を見る', expanded=False):
-                st.write(''.join[format_action(action,result) for action, result in actions]))
+                st.write(''.join([format_action(action,result) for action, result in actions]))
             
         st.session_state.past.append(user_input)
         st.session_state.generated.append(answer)
