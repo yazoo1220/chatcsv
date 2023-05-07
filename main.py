@@ -55,7 +55,7 @@ from collections import namedtuple
 AgentAction = namedtuple('AgentAction', ['tool', 'tool_input', 'log'])
 
 def format_action(action, result):
-    action_fields = '\n'.join([f"{field}: {getattr(action, field)}" for field in action._fields])
+    action_fields = '\n'.join([f"{field}: {getattr(action, field)}\n" for field in action._fields])
     return f"{action_fields}\nResult: {result}\n"
 
 if ask_button:
