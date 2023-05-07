@@ -58,7 +58,7 @@ if ask_button:
         prefix = f'You are the best explainer. please answer in {language}. User: '
         response = agent({"input":user_input})
         result = json.dumps(response['intermediate_steps'], indent=2, ensure_ascii=False).replace('[\n', '').replace(']\n', '').replace(']', '').replace('"', '')
-        answer = json.dumps(response['output']).replace('"', '')
+        answer = json.dumps(response['output'],ensure_ascii=False).replace('"', '')
     
         st.session_state.past.append(user_input)
         st.session_state.generated.append(result+'\n\n'+answer)
