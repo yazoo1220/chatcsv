@@ -4,4 +4,4 @@ streamlit
 streamlit-chat
 pexpect
 tabulate
-sklearn
+scikit-learn
