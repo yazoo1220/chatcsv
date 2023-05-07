@@ -66,12 +66,12 @@ if ask_button:
         actions = response['intermediate_steps']
         actions_list = []
         for action, result in actions:
-            actions_list.append(f'''
+            actions_list.append(f"""
                Tool: {action.tool}\n
                Input: {action.tool_input}\n
                Log: {action.log}\n\n
                Result: {result}\n
-            ''')
+            """)
         answer = json.dumps(response['output'],ensure_ascii=False).replace('"', '')
         if language == 'English':
             with st.expander('ℹ️ Show details', expanded=False):
