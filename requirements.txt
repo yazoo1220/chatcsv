@@ -4,3 +4,4 @@ streamlit
 streamlit-chat
 pexpect
 tabulate
+sklearn
