@@ -69,13 +69,13 @@ if ask_button:
             actions_list.append(f"""
                Tool: {action.tool}\n
                Input: {action.tool_input}\n
-               Log: {action.log}\n\n
+               Log: {action.log}\n
                Result: {result}\n
             """)
         answer = json.dumps(response['output'],ensure_ascii=False).replace('"', '')
         if language == 'English':
             with st.expander('ℹ️ Show details', expanded=False):
-                st.info('\n'.join(actions_list))
+                st.write('\n'.join(actions_list))
         else:
             with st.expander('ℹ️ 詳細を見る', expanded=False):
                 st.write('\n'.join(actions_list))
