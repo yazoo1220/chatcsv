@@ -55,7 +55,7 @@ from collections import namedtuple
 AgentAction = namedtuple('AgentAction', ['tool', 'tool_input', 'log'])
 
 def format_action(action, result):
-    action_fields = '\n'.join([f"{field}: {getattr(action, field)}\n" for field in action._fields])
+    action_fields = '\n'.join([f"{field}: {getattr(action, field)}"+'\n' for field in action._fields])
     return f"{action_fields}\nResult: {result}\n"
 
 if ask_button:
@@ -64,13 +64,21 @@ if ask_button:
         prefix = f'You are the best explainer. please answer in {language}. User: '
         response = agent({"input":user_input})
         actions = response['intermediate_steps']
+        actions_list = []
+        for action, result in actions:
+            actions_list.append(f'''
+               Tool: {action.tool}\n
+               Input: {action.tool_input}\n
+               Log: {action.log}\n\n
+               Result: {result}\n
+            '''
         answer = json.dumps(response['output'],ensure_ascii=False).replace('"', '')
         if language == 'English':
             with st.expander('ℹ️ Show details', expanded=False):
-                st.info('\n'.join([format_action(action,result) for action, result in actions]))
+                st.info('\n'.join(actions_list))
         else:
             with st.expander('ℹ️ 詳細を見る', expanded=False):
-                st.write([format_action(action,result) for action, result in actions])
+                st.write('\n'.join(actions_list))
             
         st.session_state.past.append(user_input)
         st.session_state.generated.append(answer)
