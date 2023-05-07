@@ -51,6 +51,7 @@ else:
 language = st.selectbox('language',['English','日本語'])
 
 import json
+import re
 from collections import namedtuple
 AgentAction = namedtuple('AgentAction', ['tool', 'tool_input', 'log'])
 
@@ -66,12 +67,15 @@ if ask_button:
         actions = response['intermediate_steps']
         actions_list = []
         for action, result in actions:
-            actions_list.append(f"""
+            text = f"""
                Tool: {action.tool}\n
                Input: {action.tool_input}\n
                Log: {action.log}\n
                Result: {result}\n
-            """)
+            """
+            text = re.sub(r'`[^`]+`', '', text)
+            actions_list.append(text)
+            
         answer = json.dumps(response['output'],ensure_ascii=False).replace('"', '')
         if language == 'English':
             with st.expander('ℹ️ Show details', expanded=False):
