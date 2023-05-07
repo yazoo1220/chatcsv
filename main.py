@@ -53,16 +53,17 @@ language = st.selectbox('language',['English','日本語'])
 
 import json
 if ask_button:
-    chat_history = []
-    prefix = f'You are the best explainer. please answer in {language}. User: '
-    response = agent({"input":user_input})
-    result = json.dumps(response['intermediate_steps'], indent=2).replace('[\n', '').replace(']\n', '')
+     with st.spinner('typing...'):
+        chat_history = []
+        prefix = f'You are the best explainer. please answer in {language}. User: '
+        response = agent({"input":user_input})
+        result = json.dumps(response['intermediate_steps'], indent=2).replace('[\n', '').replace(']\n', '')
     
-    st.session_state.past.append(user_input)
-    st.session_state.generated.append(result)
-    st.session_state.generated.append(response['output'])
-    # chat_history.append(user_input)
-    # chat_history.append(result)
+        st.session_state.past.append(user_input)
+        st.session_state.generated.append(result)
+        st.session_state.generated.append(response['output'])
+        # chat_history.append(user_input)
+        # chat_history.append(result)
 
 if st.session_state["generated"]:
 
