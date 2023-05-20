@@ -79,7 +79,7 @@ if df.shape[0] > 0:
 else:
     pass
 
-# language = st.selectbox('language',['English','日本語'])
+language = st.selectbox('language',['English','日本語'])
 
 import json
 import re
