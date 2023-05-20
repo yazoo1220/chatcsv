@@ -25,6 +25,7 @@ from langchain.callbacks.base import BaseCallbackHandler
 from langchain.schema import (
     HumanMessage,
 )
+from typing import Any, Dict, List
 
 df = pd.DataFrame([])
 data = st.file_uploader(label='Upload CSV file', type='csv')
