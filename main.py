@@ -96,7 +96,7 @@ if ask_button:
     with st.spinner('typing...'):
         prefix = f'You are the best explainer. please answer in {language}. User: '
         handler = SimpleStreamlitCallbackHandler()
-        response = agent({"input":user_input,"callback_manager":handler})
+        response = agent({"input":user_input,"callbacks":handler})
         
         
 #         actions = response['intermediate_steps']
