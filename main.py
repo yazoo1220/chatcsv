@@ -79,7 +79,7 @@ if df.shape[0] > 0:
 else:
     pass
 
-language = st.selectbox('language',['English','日本語'])
+# language = st.selectbox('language',['English','日本語'])
 
 import json
 import re
@@ -91,7 +91,7 @@ def format_action(action, result):
     return f"{action_fields}\nResult: {result}\n"
 
 if ask_button:
-    res_box = st.empty()
+#     res_box = st.empty()
     st.write("Input:", user_input)
     with st.spinner('typing...'):
         prefix = f'You are the best explainer. please answer in {language}. User: '
@@ -99,29 +99,29 @@ if ask_button:
         response = agent({"input":user_input,"callbacks":handler})
         
         
-#         actions = response['intermediate_steps']
-#         actions_list = []
-#         for action, result in actions:
-#             text = f"""Tool: {action.tool}\n
-#                Input: {action.tool_input}\n
-#                Log: {action.log}\nResult: {result}\n
-#             """
-#             text = re.sub(r'`[^`]+`', '', text)
-#             actions_list.append(text)
+        actions = response['intermediate_steps']
+        actions_list = []
+        for action, result in actions:
+            text = f"""Tool: {action.tool}\n
+               Input: {action.tool_input}\n
+               Log: {action.log}\nResult: {result}\n
+            """
+            text = re.sub(r'`[^`]+`', '', text)
+            actions_list.append(text)
             
-#         answer = json.dumps(response['output'],ensure_ascii=False).replace('"', '')
-#         if language == 'English':
-#             with st.expander('ℹ️ Show details', expanded=False):
-#                 st.write('\n'.join(actions_list))
-#         else:
-#             with st.expander('ℹ️ 詳細を見る', expanded=False):
-#                 st.write('\n'.join(actions_list))
+        answer = json.dumps(response['output'],ensure_ascii=False).replace('"', '')
+        if language == 'English':
+            with st.expander('ℹ️ Show details', expanded=False):
+                st.write('\n'.join(actions_list))
+        else:
+            with st.expander('ℹ️ 詳細を見る', expanded=False):
+                st.write('\n'.join(actions_list))
             
-#         st.session_state.past.append(user_input)
-#         st.session_state.generated.append(answer)
+        st.session_state.past.append(user_input)
+        st.session_state.generated.append(answer)
         
-# if st.session_state["generated"]:
+if st.session_state["generated"]:
 
-#     for i in range(len(st.session_state["generated"]) - 1, -1, -1):
-#         message(st.session_state["generated"][i], key=str(i))
-#         message(st.session_state["past"][i], is_user=True, key=str(i) + "_user")
+    for i in range(len(st.session_state["generated"]) - 1, -1, -1):
+        message(st.session_state["generated"][i], key=str(i))
+        message(st.session_state["past"][i], is_user=True, key=str(i) + "_user")
