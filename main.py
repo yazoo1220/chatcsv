@@ -1,6 +1,5 @@
 """Python file to serve as the frontend"""
 import streamlit as st
-from streamlit_chat import message
 import os
 import pexpect
 
@@ -38,11 +37,35 @@ def get_text():
     input_text = st.text_input("You: ", "Tell me the average of the revenue", key="input")
     return input_text
 
+def get_state(): 
+     if "state" not in st.session_state: 
+         st.session_state.state = {"memory": ConversationBufferMemory(memory_key="chat_history")} 
+     return st.session_state.state 
+state = get_state()
+
+st.write(state['memory'].load_memory_variables({}))
+
+prompt = PromptTemplate(
+    input_variables=["chat_history","input"], 
+    template='Based on the following chat_history, Please reply to the question in format of markdown. history: {chat_history}. question: {input}'
+)
+
+class SimpleStreamlitCallbackHandler(BaseCallbackHandler):
+    """ Copied only streaming part from StreamlitCallbackHandler """
+    
+    def __init__(self) -> None:
+        self.tokens_area = st.empty()
+        self.tokens_stream = ""
+        
+    def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
+        """Run on new LLM token. Only available when streaming is enabled."""
+        self.tokens_stream += token
+        self.tokens_area.markdown(self.tokens_stream)
 
 ask_button = ""
 
 if df.shape[0] > 0:
-    agent = create_pandas_dataframe_agent(OpenAI(temperature=0, max_tokens=1000), df, verbose=True, return_intermediate_steps=True)
+    agent = create_pandas_dataframe_agent(OpenAI(temperature=0, max_tokens=1000), df, memory=state['memory'], verbose=True, return_intermediate_steps=True)
     user_input = get_text()
     ask_button = st.button('ask')
 else:
@@ -60,33 +83,37 @@ def format_action(action, result):
     return f"{action_fields}\nResult: {result}\n"
 
 if ask_button:
-     with st.spinner('typing...'):
-        chat_history = []
+    res_box = st.empty()
+    st.write("Input:", user_input)
+    with st.spinner('typing...'):
         prefix = f'You are the best explainer. please answer in {language}. User: '
-        response = agent({"input":user_input})
-        actions = response['intermediate_steps']
-        actions_list = []
-        for action, result in actions:
-            text = f"""Tool: {action.tool}\n
-               Input: {action.tool_input}\n
-               Log: {action.log}\nResult: {result}\n
-            """
-            text = re.sub(r'`[^`]+`', '', text)
-            actions_list.append(text)
-            
-        answer = json.dumps(response['output'],ensure_ascii=False).replace('"', '')
-        if language == 'English':
-            with st.expander('ℹ️ Show details', expanded=False):
-                st.write('\n'.join(actions_list))
-        else:
-            with st.expander('ℹ️ 詳細を見る', expanded=False):
-                st.write('\n'.join(actions_list))
-            
-        st.session_state.past.append(user_input)
-        st.session_state.generated.append(answer)
+        handler = SimpleStreamlitCallbackHandler()
+        response = agent({"input":user_input,"callbacks":[handler]})
         
-if st.session_state["generated"]:
+        
+#         actions = response['intermediate_steps']
+#         actions_list = []
+#         for action, result in actions:
+#             text = f"""Tool: {action.tool}\n
+#                Input: {action.tool_input}\n
+#                Log: {action.log}\nResult: {result}\n
+#             """
+#             text = re.sub(r'`[^`]+`', '', text)
+#             actions_list.append(text)
+            
+#         answer = json.dumps(response['output'],ensure_ascii=False).replace('"', '')
+#         if language == 'English':
+#             with st.expander('ℹ️ Show details', expanded=False):
+#                 st.write('\n'.join(actions_list))
+#         else:
+#             with st.expander('ℹ️ 詳細を見る', expanded=False):
+#                 st.write('\n'.join(actions_list))
+            
+#         st.session_state.past.append(user_input)
+#         st.session_state.generated.append(answer)
+        
+# if st.session_state["generated"]:
 
-    for i in range(len(st.session_state["generated"]) - 1, -1, -1):
-        message(st.session_state["generated"][i], key=str(i))
-        message(st.session_state["past"][i], is_user=True, key=str(i) + "_user")
+#     for i in range(len(st.session_state["generated"]) - 1, -1, -1):
+#         message(st.session_state["generated"][i], key=str(i))
+#         message(st.session_state["past"][i], is_user=True, key=str(i) + "_user")
