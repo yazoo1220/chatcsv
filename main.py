@@ -51,8 +51,6 @@ def get_state():
      return st.session_state.state 
 state = get_state()
 
-st.write(state['memory'].load_memory_variables({}))
-
 prompt = PromptTemplate(
     input_variables=["chat_history","input"], 
     template='Based on the following chat_history, Please reply to the question in format of markdown. history: {chat_history}. question: {input}'
