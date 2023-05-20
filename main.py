@@ -1,5 +1,6 @@
 """Python file to serve as the frontend"""
 import streamlit as st
+from streamlit_chat import message
 import os
 import pexpect
 
@@ -95,7 +96,7 @@ if ask_button:
     with st.spinner('typing...'):
         prefix = f'You are the best explainer. please answer in {language}. User: '
         handler = SimpleStreamlitCallbackHandler()
-        response = agent({"input":user_input,"callbacks":[handler]})
+        response = agent({"input":user_input},"callback_manager":handler})
         
         
 #         actions = response['intermediate_steps']
