@@ -90,7 +90,6 @@ def format_action(action, result):
 
 if ask_button:
 #     res_box = st.empty()
-    st.write("Input:", user_input)
     with st.spinner('typing...'):
         prefix = f'You are the best explainer. please answer in {language}. User: '
         handler = SimpleStreamlitCallbackHandler()
