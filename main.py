@@ -71,7 +71,7 @@ class SimpleStreamlitCallbackHandler(BaseCallbackHandler):
 ask_button = ""
 
 if df.shape[0] > 0:
-    agent = create_pandas_dataframe_agent(OpenAI(temperature=0, max_tokens=2000), df, memory=state['memory'], verbose=True, return_intermediate_steps=True, agent_type=AgentType.ZERO_SHOT_REACT_DESCRIPTION)
+    agent = create_pandas_dataframe_agent(ChatOpenAI(temperature=0), df, verbose=True, return_intermediate_steps=True, agent_type=AgentType.OPENAI_FUNCTIONS)
     user_input = get_text()
     ask_button = st.button('ask')
 else:
