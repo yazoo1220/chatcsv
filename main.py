@@ -19,7 +19,7 @@ from langchain.agents import load_tools, initialize_agent, AgentType, Tool, tool
 from langchain.chat_models import ChatOpenAI
 from langchain.llms import OpenAI
 import pandas as pd
-from langchain.agents import create_pandas_dataframe_agent
+from langchain_experimental.agents import create_pandas_dataframe_agent
 from langchain.memory import ConversationBufferMemory
 from langchain import PromptTemplate
 from langchain.callbacks.base import BaseCallbackHandler
