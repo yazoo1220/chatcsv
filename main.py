@@ -71,7 +71,12 @@ class SimpleStreamlitCallbackHandler(BaseCallbackHandler):
 ask_button = ""
 
 if df.shape[0] > 0:
-    agent = create_pandas_dataframe_agent(OpenAI(temperature=0), df, verbose=True, return_intermediate_steps=True, agent_type=AgentType.ZERO_SHOT_REACT_DESCRIPTION)
+    agent = create_pandas_dataframe_agent(
+        ChatOpenAI(temperature=0, model="gpt-4-1106-preview"),
+        df,
+        verbose=True,
+        return_intermediate_steps=True,
+        agent_type=AgentType.ZERO_SHOT_REACT_DESCRIPTION)
     user_input = get_text()
     ask_button = st.button('ask')
 else:
@@ -91,7 +96,7 @@ def format_action(action, result):
 if ask_button:
 #     res_box = st.empty()
     with st.spinner('typing...'):
-        prefix = f'You are the best explainer. please answer in {language}. User: '
+        prefix = f'あなたはデータ分析のプロフェッショナルです。Userの質問に対してデータから得られる洞察を次の言語で答えてください。 {language}. User: '
         handler = SimpleStreamlitCallbackHandler()
         response = agent({"input":user_input}) #,"callbacks":handler})
         
