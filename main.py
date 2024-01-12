@@ -33,8 +33,8 @@ data = st.file_uploader(label='Upload CSV file', type='csv')
 
 # st.download_button(label='サンプルデータをダウンロードする',data='https://drive.google.com/file/d/1wuSx35y3-hjZew1XhrM78xlAGIDTd4fp/view?usp=drive_open',mime='text/csv')
 
-header_num = st.number_input(label='Header position',value=0)
-index_num = st.number_input(label='Index position',value=2)
+header_num = st.number_input(label='ヘッダーの行',value=0)
+index_num = st.number_input(label='インデックスの列',value=2)
 index_list = [i for i in range(index_num)]
 
 if data:
@@ -82,7 +82,7 @@ if df.shape[0] > 0:
 else:
     pass
 
-language = st.selectbox('language',['English','日本語'])
+# language = st.selectbox('language',['日本語','English'])
 
 import json
 import re
@@ -96,7 +96,7 @@ def format_action(action, result):
 if ask_button:
 #     res_box = st.empty()
     with st.spinner('typing...'):
-        prefix = f'あなたはデータ分析のプロフェッショナルです。Userの質問に対してデータから得られる洞察を次の言語で答えてください。 {language}. User: '
+        prefix = f'あなたはデータ分析のプロフェッショナルです。Userの質問に対してデータから得られる洞察を次の日本語で答えてください。 User: '
         handler = SimpleStreamlitCallbackHandler()
         response = agent({"input":user_input}) #,"callbacks":handler})
         
