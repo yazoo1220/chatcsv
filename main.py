@@ -82,7 +82,7 @@ if df.shape[0] > 0:
 else:
     pass
 
-# language = st.selectbox('language',['日本語','English'])
+language = st.selectbox('language',['日本語','English'])
 
 import json
 import re
@@ -96,7 +96,7 @@ def format_action(action, result):
 if ask_button:
 #     res_box = st.empty()
     with st.spinner('typing...'):
-        prefix = f'あなたはデータ分析のプロフェッショナルです。Userの質問に対してデータから得られる洞察を次の日本語で答えてください。 User: '
+        prefix = f'あなたはデータ分析のプロフェッショナルです。Userの質問に対してデータから得られる洞察を日本語で答えてください。 User: '
         handler = SimpleStreamlitCallbackHandler()
         response = agent({"input":user_input}) #,"callbacks":handler})
         
